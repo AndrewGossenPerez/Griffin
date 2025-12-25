@@ -12,6 +12,7 @@ Result Backtest::run(const std::vector<trd::Bar>& bars, Strategy& strat){
     Excecution ex;
     Result r;
     r.equity.reserve(bars.size());
+    r.trades.reserve(bars.size());
 
     double peak=pf.equity(bars.front().close);
 
@@ -29,11 +30,36 @@ Result Backtest::run(const std::vector<trd::Bar>& bars, Strategy& strat){
             pf.buy(1,px,ex.fee);
             r.netFees+=ex.fee;
             r.netBuys+=1;
+
+            r.trades.push_back(
+                Trade{
+                    next.epoch,
+                    s.type,
+                    1,
+                    px,
+                    ex.fee
+                }
+            );
+
         } else if(s.type==trd::Type::Sell && pf.pos>0){
+
+            int qty=pf.pos;
+            
             // Sell an asset
             pf.sell(pf.pos,px,ex.fee);
             r.netFees+=ex.fee;
             r.netSells+=1;
+
+            r.trades.push_back(
+                Trade{
+                    next.epoch,
+                    s.type,
+                    qty,
+                    px,
+                    ex.fee
+                }
+            );
+
         }
 
         double eq=pf.equity(b.close);

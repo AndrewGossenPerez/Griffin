@@ -11,7 +11,6 @@
 static std::string readFile(const std::string& file){
 
     // Convert CSV into a single string buffer 
-
     std::ifstream f(file, std::ios::binary);
     if (!f) throw std::runtime_error("CSV file failed to open.");
 
@@ -42,7 +41,6 @@ template<typename T>
 static bool parseOHLCV(const char*&p,const char* end, T& out){
 
     // Parses the OHLCV portion of a csv (Open,high,low,close,volume)
-
     double v = 0.0;
     const char* start = p;
 
@@ -113,7 +111,6 @@ static bool parseYMD(const char*&p,const char* end, trd::timestamp& out){
 // -- Defined functions
 
 std::vector<trd::Bar> trd::csvReader::loadBars(const std::string& file){
-
 
     std::string fileContents=readFile(file); // Load a string buffer for the csv 
     

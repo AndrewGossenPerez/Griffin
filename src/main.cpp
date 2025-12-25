@@ -31,9 +31,8 @@ int main(){
     std::cout << "Final equity : " << r.final_equity << std::endl;
     std::cout <<  "Max Draw Down : " << r.maxdd << std::endl;
     std::cout <<  "Total fees paid : " << r.netFees << std::endl;
-    std::cout <<  "Total buys : " << r.netBuys << std::endl;
-    std::cout <<  "Total sells : " << r.netSells << std::endl;
-
+    std::cout <<  "Net trades : " << r.trades.size() << std::endl;
+  
     std::cout << std::endl;
 
     return 0;

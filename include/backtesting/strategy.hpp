@@ -5,13 +5,15 @@
 #include <random>
 
 struct Signal{
-    trd::Type type;
+  trd::Type type;
 };
 
 struct Strategy{
-    virtual ~Strategy()=default;
-    virtual Signal onBar(const trd::Bar& bar)=0;
+  virtual ~Strategy()=default;
+  virtual Signal onBar(const trd::Bar& bar)=0;
 };
+
+// -- Strategies
 
 struct UpDownStrategy : Strategy {
  
@@ -29,14 +31,14 @@ struct UpDownStrategy : Strategy {
 
 struct CoinFlip : Strategy {
 
-    std::mt19937 rng{123};
+  std::mt19937 rng{123};
 
-    Signal onBar(const trd::Bar&) override {
-        std::uniform_int_distribution<int> d(0, 2);
-        int r = d(rng);
-        if (r == 0) return {trd::Type::Buy};
-        if (r == 1) return {trd::Type::Sell};
-        return {trd::Type::None};
-    }
+  Signal onBar(const trd::Bar&) override {
+    std::uniform_int_distribution<int> d(0, 2);
+    int r = d(rng);
+    if (r == 0) return {trd::Type::Buy};
+    if (r == 1) return {trd::Type::Sell};
+    return {trd::Type::None};
+  }
 
 };
